@@ -1,0 +1,36 @@
+2026-08-28 11:08:45,701 - root - INFO - 启动钉钉客户端
+2026-08-28 11:08:45,701 - DingTalk - INFO - 应用ID：dingufrtbab1xvu69qcl
+2026-08-28 11:08:45,701 - DingTalk - INFO - 使用凭证连接钉钉
+2026-08-28 11:08:45,701 - DingTalk - INFO - 钉钉客户端创建成功
+2026-08-28 11:08:45,701 - DingTalk - INFO - 已注册ChatbotMessage的回调处理器
+2026-08-28 11:08:45,702 - DingTalk - INFO - 正在启动钉钉客户端…
+2026-08-28 11:08:45,702 - DingTalk - INFO - open connection, url=https://api.dingtalk.com/v1.0/gateway/connections/open
+2026-08-28 11:08:45,859 - DingTalk - INFO - endpoint is {'endpoint': 'wss://wss-open-connection-union.dingtalk.com:443/connect', 'ticket': 'e141bcd2-a28d-11f1-acf2-7a895ab423e0'}
+2026-08-28 11:19:13,320 - DingTalk - ERROR - [start] network exception, error=
+2026-08-28 11:19:27,337 - root - INFO - 启动钉钉客户端
+2026-08-28 11:19:27,337 - DingTalk - INFO - 应用ID：dingufrtbab1xvu69qcl
+2026-08-28 11:19:27,337 - DingTalk - INFO - 使用凭证连接钉钉
+2026-08-28 11:19:27,338 - DingTalk - INFO - 钉钉客户端创建成功
+2026-08-28 11:19:27,338 - DingTalk - INFO - 已注册ChatbotMessage的回调处理器
+2026-08-28 11:19:27,338 - DingTalk - INFO - 正在启动钉钉客户端…
+2026-08-28 11:19:27,339 - DingTalk - INFO - open connection, url=https://api.dingtalk.com/v1.0/gateway/connections/open
+2026-08-28 11:19:27,487 - DingTalk - INFO - endpoint is {'endpoint': 'wss://wss-open-connection-union.dingtalk.com:443/connect', 'ticket': '5fb57deb-a28f-11f1-88aa-c2b70ff42c2a'}
+2026-08-28 11:19:29,887 - DingTalk - ERROR - [start] network exception, error=
+2026-08-28 11:30:59,976 - root - INFO - 启动钉钉客户端
+2026-08-28 11:30:59,976 - DingTalk - INFO - 应用ID：dingufrtbab1xvu69qcl
+2026-08-28 11:30:59,976 - DingTalk - INFO - 使用凭证连接钉钉
+2026-08-28 11:30:59,976 - DingTalk - INFO - 钉钉客户端创建成功
+2026-08-28 11:30:59,977 - DingTalk - INFO - 已注册ChatbotMessage的回调处理器
+2026-08-28 11:30:59,977 - DingTalk - INFO - 正在启动钉钉客户端…
+2026-08-28 11:30:59,977 - DingTalk - INFO - open connection, url=https://api.dingtalk.com/v1.0/gateway/connections/open
+2026-08-28 11:31:00,184 - DingTalk - INFO - endpoint is {'endpoint': 'wss://wss-open-connection-union.dingtalk.com:443/connect', 'ticket': 'fc9a9eae-a290-11f1-bccb-8a3cc69d704c'}
+2026-08-28 11:31:09,363 - DingTalk - ERROR - [start] network exception, error=
+2026-08-28 11:33:24,602 - root - INFO - 启动钉钉客户端
+2026-08-28 11:33:24,602 - DingTalk - INFO - 应用ID：dingufrtbab1xvu69qcl
+2026-08-28 11:33:24,602 - DingTalk - INFO - 使用凭证连接钉钉
+2026-08-28 11:33:24,602 - DingTalk - INFO - 钉钉客户端创建成功
+2026-08-28 11:33:24,603 - DingTalk - INFO - 已注册ChatbotMessage的回调处理器
+2026-08-28 11:33:24,603 - DingTalk - INFO - 正在启动钉钉客户端…
+2026-08-28 11:33:24,603 - DingTalk - INFO - open connection, url=https://api.dingtalk.com/v1.0/gateway/connections/open
+2026-08-28 11:33:24,772 - DingTalk - INFO - endpoint is {'endpoint': 'wss://wss-open-connection-union.dingtalk.com:443/connect', 'ticket': '52c8d3ab-a291-11f1-9835-9e3b8318b3b3'}
+2026-08-28 14:20:23,817 - DingTalk - ERROR - [start] network exception, error=

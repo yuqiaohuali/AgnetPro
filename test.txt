@@ -1,0 +1,109 @@
+DeepSeek（深度求索）是一家中国的人工智能研究公司（杭州深度求索人工智能基础技术研究有限公司），在人工智能和大语言模型（LLM）领域非常知名。
+它主要以开发高性能、高性价比的开源和闭源大模型而受到全球 AI 社区和开发者的广泛关注。以下是 DeepSeek 的几个核心特点和代表性产品：
+代表性模型：
+DeepSeek-V3：其最新一代的通用大语言模型，在多项权威基准测试中表现出色，性能媲美国际顶尖的闭源模型，同时大幅降低了训练和推理成本。
+DeepSeek-R1：专注于强化学习和推理能力的模型，在数学、科学和逻辑推理等复杂任务上表现优异，且开源了其推理过程。
+DeepSeek-Coder：专门针对代码生成、理解和调试优化的模型，在开发者社区中非常受欢迎。
+DeepSeek-Math：专注于数学推理和解题的专用模型。
+开源贡献：DeepSeek 坚持开源策略，将其许多核心模型（包括模型权重和训练技术细节）向社区开放，极大地推动了全球开源 AI 生态的发展。
+技术创新：他们在模型架构（如混合注意力机制、多 Token 预测技术）和训练方法（如混合专家架构 MoE、强化学习）上有很多创新，使得模型在保持高性能的同时，显著降低了算力消耗。
+简而言之，DeepSeek 是目前全球 AI 领域最具影响力和竞争力的中国大模型研发团队之一，尤其在开源社区和代码/推理垂直领域享有很高的声誉。
+
+
+
+部署 DeepSeek 模型主要取决于你的硬件条件（是否有 GPU、显存大小）以及使用场景（个人本地测试 vs 企业级高并发生产环境）。
+以下是目前业界最主流的 3 种 DeepSeek 模型部署方案，按从易到难排序：
+方案一：最简单、最适合个人本地测试 👉 Ollama
+如果你使用的是个人电脑（Mac M系列芯片，或带有 NVIDIA 显卡的 Windows/Linux 电脑），Ollama 是绝对的首选。它一键安装，自动处理底层的量化和显存优化。
+1. 安装 Ollama
+前往官网 ollama.com 下载并安装对应系统的客户端。
+2. 下载并运行模型
+打开终端（或 PowerShell），运行以下命令（以 DeepSeek-R1 的 8B 蒸馏版为例，适合 16GB 左右显存的设备）：
+bash
+# 拉取并运行模型 (首次运行会自动下载约 5GB 的文件)
+ollama run deepseek-r1:8b
+(注：如果你的显存较大，可以尝试 deepseek-r1:14b 或 deepseek-r1:32b)
+3. 在 LangChain 中调用
+部署好后，Ollama 会在本地 http://localhost:11434 启动一个兼容 OpenAI 格式的 API 服务。你可以这样在代码中调用：
+python
+from langchain_community.chat_models import ChatOllama
+
+# 直接连接本地 Ollama 服务
+llm = ChatOllama(
+    model="deepseek-r1:8b",
+    base_url="http://localhost:11434",
+    temperature=0
+)
+
+response = llm.invoke("如何进行模型部署？")
+print(response.content)
+方案二：高性能、生产环境首选 👉 vLLM
+如果你有 Linux 服务器 和 NVIDIA GPU（如 RTX 3090/4090, A10, A100），并且需要高吞吐量、支持多用户并发，vLLM 是目前业界部署开源大模型的标准答案。它的推理速度极快，且原生支持 DeepSeek 的 MoE 架构和 PagedAttention。
+1. 环境准备
+确保已安装 NVIDIA 驱动、CUDA (>=12.1) 和 Python (>=3.9)。
+2. 安装 vLLM
+bash
+pip install vllm
+3. 启动模型服务
+使用 vllm serve 命令启动一个兼容 OpenAI API 格式的本地服务。这里以 DeepSeek-R1-Distill-Qwen-8B 为例：
+bash
+# 启动服务，监听 8000 端口
+vllm serve deepseek-ai/DeepSeek-R1-Distill-Qwen-8B \
+    --dtype auto \
+    --api-key token-abc123 \
+    --max-model-len 8192
+(提示：首次运行会自动从 HuggingFace 下载模型权重，国内网络建议配置 HF_ENDPOINT=https://hf-mirror.com)
+4. 在 LangChain 中调用
+vLLM 启动后，完全兼容 OpenAI 的 API 协议，你可以直接使用 ChatOpenAI 指向本地端口：
+python
+import os
+from langchain_openai import ChatOpenAI
+
+# 指向本地 vLLM 服务
+llm = ChatOpenAI(
+    model="deepseek-ai/DeepSeek-R1-Distill-Qwen-8B",
+    openai_api_key="token-abc123",  # 必须与启动时设置的 api-key 一致
+    openai_api_base="http://localhost:8000/v1",
+    temperature=0
+)
+
+response = llm.invoke("如何进行模型部署？")
+print(response.content)
+方案三：显存不足的轻量级方案 👉 LM Studio / llama.cpp
+如果你的显卡显存较小（如 8GB 或更低），无法运行完整的模型，可以使用 GGUF 量化格式的模型。
+下载 LM Studio (lmstudio.ai)，这是一个带图形界面的本地模型运行工具。
+在软件内搜索 DeepSeek R1 8B GGUF，选择一个量化版本（如 Q4_K_M，约需 6GB 显存）。
+点击 "Start Server"，它会提供一个类似 http://localhost:1234/v1 的本地 API。
+在 LangChain 中，同样使用 ChatOpenAI，将 openai_api_base 指向 http://localhost:1234/v1 即可。
+⚠️ 部署前的核心避坑指南：显存估算
+DeepSeek 模型有很多尺寸，千万不要盲目下载大模型，否则会导致 OOM（显存溢出）报错。以下是 FP16 精度下的最低显存需求参考：
+模型规格 (以 R1 蒸馏版为例)
+推荐量化格式
+最低显存需求 (推理)
+适用硬件
+1.5B / 7B / 8B
+Q4 (4-bit)
+6 GB - 8 GB
+消费级显卡 (RTX 3060/4060, Mac 8G)
+14B
+Q4 (4-bit)
+10 GB - 12 GB
+进阶消费级 (RTX 3080/4070, Mac 16G)
+32B
+Q4 (4-bit)
+20 GB - 24 GB
+高端消费级 (RTX 3090/4090 24G)
+70B
+Q4 (4-bit)
+40 GB - 48 GB
+专业级 (双 3090/4090, A6000, A100)
+671B (满血版)
+FP8 / BF16
+400 GB+
+企业级集群 (多张 H100/A100 80G)
+(注：如果你只是想*调用 DeepSeek 的能力，而不想自己买显卡维护服务器，强烈建议直接使用 DeepSeek 官方 API 或国内代理如 硅基流动 (SiliconFlow)、阿里云百炼，成本极低且无需关心部署。你之前代码中使用的 base_url 很可能就是这类云端 API 服务。)*
+💡 总结建议
+个人学习/测试：无脑选 Ollama。
+公司项目/需要高并发：在 Linux 服务器上用 vLLM。
+只是想写代码跑通 RAG：直接用云端 API（如 SiliconFlow），把 base_url 换成他们的地址即可，省去所有部署烦恼。
+你可以根据你当前的硬件情况，告诉我你想尝试哪一种，我可以为你提供更详细的针对性步骤！
